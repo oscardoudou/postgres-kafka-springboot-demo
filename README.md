@@ -1,12 +1,12 @@
 postgres-kafka-springboot-min-demo
 ===============
-#### 1. Spin up kakfa
+### 1. Spin up kakfa
 ```
 cd confluent-platform
 docker-compose up -d
 ```
 
-#### 2. Create topic
+### 2. Create topic
 ```
 docker exec -it ksqldb-cli ksql http://ksqldb-server:8088
 ```
@@ -33,13 +33,13 @@ SHOW CONNECTORS;
 DESCRIBE CONNECTOR JDBC_SOURCE_POSTGRES_01
 ```
 
-#### 3. Build and start consumer springboot service
+### 3. Build and start consumer springboot service
 ```
 mvn clean package
 java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005 -jar target/converter-0.0.1-SNAPSHOT.jar 
 ```
 
-#### 4. Mimic postgres new data coming
+### 4. Mimic postgres new data coming
 ```
 docker exec -it postgres bash -c 'psql -U postgres'
 INSERT INTO cities (city_id, name, state) VALUES (7, 'Chapel Hill', 'NC');
@@ -47,12 +47,16 @@ INSERT INTO cities (city_id, name, state) VALUES (8, 'Las Vegas', 'NV');
 INSERT INTO cities (city_id, name, state) VALUES (9, 'New York', 'NY');
 ```
 
- if you also want existing records in topic, in applicaiton.yml change `auto-offset-reset` to `earliest`.
+### Demo
+![2021-12-01 13 12 10](https://user-images.githubusercontent.com/17885952/144299578-bf9b9577-e644-41d8-a495-f34df23c07ec.gif)
+
+### Troubleshoot
+If you also want existing records in topic, in applicaiton.yml change `auto-offset-reset` to `earliest`.
 
 Here is an older version of [dockerfile](https://www.confluent.io/blog/kafka-connect-deep-dive-jdbc-source-connector/), where it has a dedicated container for kafka connect, which I can make REST call to. 
 
 
-#### Reference
+### Reference
 https://kafka-tutorials.confluent.io/connect-add-key-to-source/ksql.html#declare-the-topic-as-a-ksqldb-table
 https://www.confluent.io/blog/apache-kafka-spring-boot-application/
 https://developer.confluent.io/learn-kafka/spring/hands-on-consume-messages/
