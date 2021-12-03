@@ -1,0 +1,5 @@
+ocean_contract_group_id,ocean_contract_amendment_id,amendment_name,amendment_status,administrator,date_added,amendment_notes,base_rate_eff_date,surcharge_eff_date,gri_eff_date,received_date,amendement_type,auditor_assigned,rate_admin_id,last_modified,auditor_name,external_ref_id,share_amendment_status,approved_by,customer_name,is_esuds
+92477,464853,Initial Load,2,Meg Heier,2021-12-01 14:42:07.027814-06,,,,,2021-12-01 13:36:00-06,AM,,313731,2021-12-01 15:42:41.120895,,,,,,
+63709,464852,AMD 0014,2,Jeremy Alejandrino,2021-12-01 13:47:32.123813-06,,,,,2021-12-02 02:43:00-06,AM,,217305,2021-12-01 15:05:39.631954,,,,,,
+90077,464851,8,2,Shawn Cheung,2021-12-01 13:41:12.741908-06,,,,,2021-12-01 10:40:00-06,AM,,293908,2021-12-01 14:42:02.093108,,,,,,
+21348,464850,12-01-2021 Unique Logistics,2,Kamal Ahmad,2021-12-01 13:39:50.226278-06,,,,,2021-12-01 13:37:00-06,AM,,318546,2021-12-01 14:39:52.450972,,,,,,

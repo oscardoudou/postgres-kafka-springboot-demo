@@ -128,3 +128,5 @@ services:
      - POSTGRES_PASSWORD=postgres
     volumes:
      - ./cities.sql:/docker-entrypoint-initdb.d/cities.sql
+     - ./amendments.sql:/docker-entrypoint-initdb.d/amendments.sql
+     - ./:/data
