@@ -1,5 +1,7 @@
 package us.cargosphere.ursc.converter;
 
+import org.apache.avro.generic.GenericRecord;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -8,10 +10,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class Processor {
     private final Logger logger = LoggerFactory.getLogger(Processor.class);
-    @KafkaListener(topics = "postgres_cities", groupId = "group_id")
-    public void convert(String amendmentId) throws InterruptedException{
-        logger.info("AmendmentId: " + amendmentId + " received");
+    @KafkaListener(topics = "postgres_", groupId = "group_id")
+    public void convert(ConsumerRecord<Integer, GenericRecord> record) throws InterruptedException{
+        int amendmentId = record.key();
+        GenericRecord messageValue = record.value();
+        logger.info("AmendmentId: " + amendmentId + ":" + messageValue.get("ocean_contract_group_id") + " received");
         Thread.sleep(5000);
-        logger.info("AmendmentId: " + amendmentId + " get processed");
+        logger.info("AmendmentId: " + amendmentId + ":" + messageValue.get("administrator") + " get processed");
     }
 }
