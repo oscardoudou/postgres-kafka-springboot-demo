@@ -1,0 +1,6 @@
+INSERT INTO public.cs_ocean_contract_amendment
+(ocean_contract_group_id, ocean_contract_amendment_id, amendment_name, amendment_status, administrator, date_added, amendment_notes, base_rate_eff_date, surcharge_eff_date, gri_eff_date, received_date, amendement_type, auditor_assigned, rate_admin_id, last_modified, auditor_name, external_ref_id, share_amendment_status, approved_by, customer_name, is_esuds)
+VALUES(83757, 464860, 'Amend01 Dec 2021', 2, 'CMDU-SFTP', '2021-12-01 18:11:00.458', NULL, NULL, NULL, NULL, '2021-12-01 18:11:00.458', 'AM', NULL, NULL, '2021-12-02 07:58:35.022', NULL, '', 3, 'Leif-svante Niestaedt', 'DHL Global Forwarding', true);
+INSERT INTO public.cs_ocean_contract_amendment
+(ocean_contract_group_id, ocean_contract_amendment_id, amendment_name, amendment_status, administrator, date_added, amendment_notes, base_rate_eff_date, surcharge_eff_date, gri_eff_date, received_date, amendement_type, auditor_assigned, rate_admin_id, last_modified, auditor_name, external_ref_id, share_amendment_status, approved_by, customer_name, is_esuds)
+VALUES(83758, 464861, 'Amend01 Dec 2021', 2, 'CMDU-SFTP', '2021-12-01 18:12:00.457', NULL, NULL, NULL, NULL, '2021-12-01 18:12:00.457', 'AM', NULL, NULL, '2021-12-02 07:57:51.751', NULL, '', 3, 'Leif-svante Niestaedt', 'DHL Global Forwarding', true);

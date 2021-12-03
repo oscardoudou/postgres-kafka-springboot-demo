@@ -1,0 +1,9 @@
+INSERT INTO public.cs_ocean_contract_amendment
+(ocean_contract_group_id, ocean_contract_amendment_id, amendment_name, amendment_status, administrator, date_added, amendment_notes, base_rate_eff_date, surcharge_eff_date, gri_eff_date, received_date, amendement_type, auditor_assigned, rate_admin_id, last_modified, auditor_name, external_ref_id, share_amendment_status, approved_by, customer_name, is_esuds)
+VALUES(86234, 464854, '12', 2, 'Shawn Cheung', '2021-12-01 16:55:23.782', NULL, NULL, NULL, NULL, '2021-12-01 13:49:00.000', 'AM', NULL, 293908, '2021-12-01 17:02:27.821', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.cs_ocean_contract_amendment
+(ocean_contract_group_id, ocean_contract_amendment_id, amendment_name, amendment_status, administrator, date_added, amendment_notes, base_rate_eff_date, surcharge_eff_date, gri_eff_date, received_date, amendement_type, auditor_assigned, rate_admin_id, last_modified, auditor_name, external_ref_id, share_amendment_status, approved_by, customer_name, is_esuds)
+VALUES(86313, 464855, '16', 2, 'Shawn Cheung', '2021-12-01 17:30:18.357', NULL, NULL, NULL, NULL, '2021-12-01 14:29:00.000', 'AM', NULL, 293908, '2021-12-01 17:31:34.883', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.cs_ocean_contract_amendment
+(ocean_contract_group_id, ocean_contract_amendment_id, amendment_name, amendment_status, administrator, date_added, amendment_notes, base_rate_eff_date, surcharge_eff_date, gri_eff_date, received_date, amendement_type, auditor_assigned, rate_admin_id, last_modified, auditor_name, external_ref_id, share_amendment_status, approved_by, customer_name, is_esuds)
+VALUES(86844, 464856, '17', 2, 'Shawn Cheung', '2021-12-01 17:43:37.395', NULL, NULL, NULL, NULL, '2021-12-01 14:42:00.000', 'AM', NULL, 293908, '2021-12-01 17:44:49.362', NULL, NULL, NULL, NULL, NULL, NULL);

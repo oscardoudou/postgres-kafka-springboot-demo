@@ -6,60 +6,68 @@ cd confluent-platform
 docker-compose up -d
 ```
 
-### 2. Create topic
+### 2. Verify everything is prepared
 ```
+docker-compose exec postgres bash
+#verify the table is there
+psql -U postgres -c 'select * from cs_ocean_contract_amendment'
+```
+```
+#wait a few seconds for ksqldb up and running, otherwise you may get error in ksql cli prompt
 docker exec -it ksqldb-cli ksql http://ksqldb-server:8088
+show topics;
 ```
 
+### 3. Create connector/topic based on query
 ```
-CREATE SOURCE CONNECTOR JDBC_SOURCE_POSTGRES_01 WITH (
-    'connector.class'= 'io.confluent.connect.jdbc.JdbcSourceConnector',
-    'connection.url'= 'jdbc:postgresql://postgres:5432/postgres',
-    'connection.user'= 'postgres',
-    'connection.password'= 'postgres',
-    'mode'= 'incrementing',
-    'incrementing.column.name'= 'city_id',
-    'topic.prefix'= 'postgres_',
-    'transforms'= 'copyFieldToKey,extractKeyFromStruct,removeKeyFromValue',
-    'transforms.copyFieldToKey.type'= 'org.apache.kafka.connect.transforms.ValueToKey',
-    'transforms.copyFieldToKey.fields'= 'city_id',
-    'transforms.extractKeyFromStruct.type'= 'org.apache.kafka.connect.transforms.ExtractField$Key',
-    'transforms.extractKeyFromStruct.field'= 'city_id',
-    'transforms.removeKeyFromValue.type'= 'org.apache.kafka.connect.transforms.ReplaceField$Value',
-    'transforms.removeKeyFromValue.blacklist'= 'city_id',
-    'key.converter' = 'org.apache.kafka.connect.converters.IntegerConverter'
-);
-SHOW CONNECTORS;
-DESCRIBE CONNECTOR JDBC_SOURCE_POSTGRES_01
+cd confluent-platform
+#create the connector/topic outside the KSQL CLI session, details see src/statements.sql
+./sendStmtToRest.sh
 ```
 
-### 3. Build and start consumer springboot service
+### 4. Build and start consumer springboot service
 ```
 mvn clean package
 java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005 -jar target/converter-0.0.1-SNAPSHOT.jar 
 ```
 
-### 4. Mimic postgres new data coming
+### 5. Mimic postgres new record insertion 
 ```
-docker exec -it postgres bash -c 'psql -U postgres'
-INSERT INTO cities (city_id, name, state) VALUES (7, 'Chapel Hill', 'NC');
-INSERT INTO cities (city_id, name, state) VALUES (8, 'Las Vegas', 'NV');
-INSERT INTO cities (city_id, name, state) VALUES (9, 'New York', 'NY');
+docker-compose exec postgres bash 
+```
+```
+#add 2-3 amendments records per batch, 2s interval between each batch
+for i in {0..2}; do psql -U postgres -f data/insert${i}.sql; sleep 2; done
 ```
 
-### Demo
-![2021-12-01 13 12 10](https://user-images.githubusercontent.com/17885952/144299578-bf9b9577-e644-41d8-a495-f34df23c07ec.gif)
+### 6. Observe the log from springboot service and clean up
+you should see message coming in and will be process in 5s, then continue processing message.
+```
+docker-compose down
+```
 
-### Troubleshoot
+## Other
 If you also want existing records in topic, in applicaiton.yml change `auto-offset-reset` to `earliest`.
 
 Here is an older version of [dockerfile](https://www.confluent.io/blog/kafka-connect-deep-dive-jdbc-source-connector/), where it has a dedicated container for kafka connect, which I can make REST call to. 
 
 
-### Reference
+## Reference
+Query based ingest  
+https://www.confluent.io/blog/kafka-connect-deep-dive-jdbc-source-connector/
+
+Create Conector/Topic and message construction aka SMT(single message tranfrom)  
 https://kafka-tutorials.confluent.io/connect-add-key-to-source/ksql.html#declare-the-topic-as-a-ksqldb-table
-https://www.confluent.io/blog/apache-kafka-spring-boot-application/
+
+SpringBoot Annotation  
+https://www.confluent.io/blog/apache-kafka-spring-boot-application/  
 https://developer.confluent.io/learn-kafka/spring/hands-on-consume-messages/
+
+Initial springboot skeleton(actually I just learn the kafka maven dependency from this)  
 https://spring.io/projects/spring-kafka#overview
 
+Maven dependency and application.yml  
+https://www.confluent.io/blog/schema-registry-avro-in-spring-boot-application-tutorial/
 
+Consumer Record and application.yml(you could tell from the line that set Properties object)  
+https://docs.confluent.io/platform/current/schema-registry/serdes-develop/serdes-avro.html
