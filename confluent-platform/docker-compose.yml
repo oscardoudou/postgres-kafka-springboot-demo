@@ -85,6 +85,7 @@ services:
         echo "Installing connector plugins"
         mkdir -p ~/confluent-hub-components/
         /home/appuser/bin/confluent-hub install --no-prompt --component-dir confluent-hub-components/ confluentinc/kafka-connect-jdbc:10.0.2
+        /home/appuser/bin/confluent-hub install --no-prompt --component-dir confluent-hub-components/ debezium/debezium-connector-postgresql:1.1.0
         #
         echo "Launching ksqlDB"
         /usr/bin/docker/run &
@@ -121,12 +122,14 @@ services:
     # To connect to the DB:
     #   docker exec -it postgres bash -c 'psql -U $POSTGRES_USER $POSTGRES_DB'
     # *-----------------------------*
-    image: postgres:11
+    image: debezium/postgres:13
     container_name: postgres
     environment:
      - POSTGRES_USER=postgres
      - POSTGRES_PASSWORD=postgres
     volumes:
+     - ./custom-config.conf:/etc/postgresql/postgresql.conf
      - ./cities.sql:/docker-entrypoint-initdb.d/cities.sql
      - ./amendments.sql:/docker-entrypoint-initdb.d/amendments.sql
      - ./:/data
+    command: postgres -c config_file=/etc/postgresql/postgresql.conf
