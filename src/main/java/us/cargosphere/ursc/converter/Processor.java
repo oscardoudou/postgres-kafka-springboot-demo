@@ -14,8 +14,10 @@ public class Processor {
     public void convert(ConsumerRecord<String, GenericRecord> record) throws InterruptedException{
         String amendmentId = record.key();
         GenericRecord messageValue = record.value();
-        logger.info("AmendmentId: " + amendmentId + ":" + messageValue.get("ocean_contract_group_id") + " received");
+        String contractId = messageValue != null ? messageValue.get("ocean_contract_group_id").toString() : "";
+        String admin = messageValue != null ? messageValue.get("administrator").toString() : "";
+        logger.info("AmendmentId: " + amendmentId + ":" + contractId + " received");
         Thread.sleep(5000);
-        logger.info("AmendmentId: " + amendmentId + ":" + messageValue.get("administrator") + " get processed");
+        logger.info("AmendmentId: " + amendmentId + ":" + admin + " get processed");
     }
 }
