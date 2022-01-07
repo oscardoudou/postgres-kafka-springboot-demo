@@ -1,5 +1,6 @@
 #!/bin/bash
-tr '\n' ' ' < src/statements.sql | \
+connector_type="$1"
+tr '\n' ' ' < src/"${connector_type}_connector.sql"| \
 sed 's/;/;\'$'\n''/g' | \
 while read stmt; do
     echo '{"ksql":"'$stmt'", "streamsProperties": {}}' | \

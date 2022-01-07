@@ -8,9 +8,10 @@ spring:
         bootstrap-servers: localhost:29092
         group-id: group_id
         auto-offset-reset: latest
-        key-deserializer: org.apache.kafka.common.serialization.IntegerDeserializer
+        key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
         value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
 #      producer:
 #         bootstrap-servers: localhost:9092
 #         key-serializer: org.apache.kafka.common.serialization.StringSerializer
 #         value-serializer: org.apache.kafka.common.serialization.StringSerializer
+topic: ${TOPIC}

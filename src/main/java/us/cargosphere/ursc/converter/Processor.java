@@ -10,9 +10,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class Processor {
     private final Logger logger = LoggerFactory.getLogger(Processor.class);
-    @KafkaListener(topics = "postgres_", groupId = "group_id")
-    public void convert(ConsumerRecord<Integer, GenericRecord> record) throws InterruptedException{
-        int amendmentId = record.key();
+    @KafkaListener(topics = "${topic}", groupId = "group_id")
+    public void convert(ConsumerRecord<String, GenericRecord> record) throws InterruptedException{
+        String amendmentId = record.key();
         GenericRecord messageValue = record.value();
         logger.info("AmendmentId: " + amendmentId + ":" + messageValue.get("ocean_contract_group_id") + " received");
         Thread.sleep(5000);
